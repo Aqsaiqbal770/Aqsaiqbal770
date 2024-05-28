@@ -1,0 +1,71 @@
+class Bill:
+    def __init__(self, name, amount):
+        self.name = name
+        self.amount = amount
+        self.paid = False
+
+    def pay(self):
+        if not self.paid:
+            self.paid = True
+            print(f"Bill '{self.name}' has been paid.")
+        else:
+            print(f"Bill '{self.name}' is already paid.")
+
+
+class BillManager:
+    def __init__(self):
+        self.bills = []
+
+    def add_bill(self, name, amount):
+        bill = Bill(name, amount)
+        self.bills.append(bill)
+        print(f"Bill '{name}' added with amount {amount}.")
+
+    def view_bills(self):
+        if not self.bills:
+            print("No bills to show.")
+        else:
+            for bill in self.bills:
+                status = "Paid" if bill.paid else "Unpaid"
+                print(f"Bill: {bill.name}, Amount: {bill.amount}, Status: {status}")
+
+    def pay_bill(self, name):
+        for bill in self.bills:
+            if bill.name == name:
+                bill.pay()
+                return
+        print(f"Bill '{name}' not found.")
+
+
+def main():
+    manager = BillManager()
+    
+    while True:
+        print("\n1. Add a bill")
+        print("2. View all bills")
+        print("3. Pay a bill")
+        print("4. Exit")
+        choice = input("Choose an option: ")
+        
+        if choice == '1':
+            name = input("Enter the bill name: ")
+            amount = float(input("Enter the bill amount: "))
+            manager.add_bill(name, amount)
+        
+        elif choice == '2':
+            manager.view_bills()
+        
+        elif choice == '3':
+            name = input("Enter the bill name to pay: ")
+            manager.pay_bill(name)
+        
+        elif choice == '4':
+            print("Exiting program.")
+            break
+        
+        else:
+            print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    main()
